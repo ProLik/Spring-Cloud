@@ -1,6 +1,7 @@
 package com.prolik.java.springcloud.hystrix.command;
 
 import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.prolik.java.springcloud.hystrix.entity.User;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,6 +11,10 @@ public class UserCommand extends HystrixCommand<User>{
 
     private RestTemplate restTemplate;
     private Long id;
+
+    public UserCommand(){
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("GroupName")));
+    }
 
     protected UserCommand(Setter setter, RestTemplate restTemplate, Long id) {
         super(setter);
