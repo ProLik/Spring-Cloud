@@ -37,7 +37,7 @@ public class UserService {
      * @param id
      * @return
      */
-    @HystrixCommand
+    @HystrixCommand(commandKey = "getUserById", groupKey = "UserGroup", threadPoolKey = "getUserByIdThread")
     public Future<User> getUserByIdAsync(final String id){
         return new AsyncResult<User>() {
             @Override
@@ -52,13 +52,18 @@ public class UserService {
      * public private 均可以
      * @return
      */
-    public User getDefaultUser(){
-
+    public User getDefaultUser(String id, Throwable e){
+        if(true){
+            boolean error = e.getMessage().equals("error");
+        }
         return new User();
     }
 
     @HystrixCommand(fallbackMethod = "getDefaultUser",ignoreExceptions = {HystrixBadRequestException.class})
-    public User getRemoteUser(){
+    public User getRemoteUser(String id){
+        if(true){
+            throw new RuntimeException("error");
+        }
         /*exits error*/
         return new User();
     }

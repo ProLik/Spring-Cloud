@@ -2,6 +2,8 @@ package com.prolik.java.springcloud.hystrix.command;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixThreadPoolKey;
 import com.prolik.java.springcloud.hystrix.entity.User;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,11 +15,18 @@ public class UserCommand extends HystrixCommand<User>{
     private Long id;
 
     public UserCommand(){
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("GroupName")));
+        //根据命令组来划分线程池
+        /*
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("GroupName"))
+                .andCommandKey(HystrixCommandKey.Factory.asKey("CommandName")));
+        */
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("CommandGroupKey"))
+                .andCommandKey(HystrixCommandKey.Factory.asKey("CommandKey"))
+                .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey("ThreadPoolKey")));
     }
 
     protected UserCommand(Setter setter, RestTemplate restTemplate, Long id) {
-        super(setter);
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("UserGroup")));
         this.id = id;
         this.restTemplate = restTemplate;
     }
@@ -37,5 +46,15 @@ public class UserCommand extends HystrixCommand<User>{
     @Override
     protected User getFallback() {
         return new User();
+    }
+
+    /**
+     * 开启缓存的ID
+     * 请求缓存在run()和construct()执行之前生效，所以减少不必要的线程开销
+     * @return
+     */
+    @Override
+    protected String getCacheKey() {
+        return String.valueOf(id);
     }
 }
