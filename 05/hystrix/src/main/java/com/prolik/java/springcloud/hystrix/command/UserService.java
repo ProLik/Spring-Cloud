@@ -1,6 +1,9 @@
 package com.prolik.java.springcloud.hystrix.command;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import com.netflix.hystrix.exception.HystrixBadRequestException;
 import com.prolik.java.springcloud.hystrix.entity.User;
@@ -26,8 +29,11 @@ public class UserService {
      * @param id
      * @return
      */
+    @CacheResult(cacheKeyMethod = "getUserByIdCacheKey")
+    //设置请求缓存 默认key为所有参数,cacheKeyMethod 优先级比@CacheKey高
     @HystrixCommand(/*fallbackMethod = "getDefaultUser"*/ fallbackMethod = "getRemoteUser")
-    public User getUserById(Long id) {
+    public User getUserById(@CacheKey("id") Long id) {
+        //CacheKey 可以指定对象中的属性 如：@CacheKey("id") User user
         return restTemplate.getForObject("http://USER-SERVICE/users/{1}", User.class, id);
     }
 
@@ -66,5 +72,16 @@ public class UserService {
         }
         /*exits error*/
         return new User();
+    }
+
+    private Long getUserByIdCacheKey(Long id){
+        return id;
+    }
+
+    //注：commandKey必须指定对应的请求缓存
+    @CacheRemove(commandKey = "getUserById")
+    @HystrixCommand
+    public User update(@CacheKey("id") User user){
+        return restTemplate.postForObject("http://USER-SERVICE/users", user, User.class);
     }
 }
