@@ -39,7 +39,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
-			<version>1.4.4.BUILD-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
