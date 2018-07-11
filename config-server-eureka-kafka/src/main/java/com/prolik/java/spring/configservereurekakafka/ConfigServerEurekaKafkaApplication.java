@@ -1,16 +1,16 @@
-package com.example.spring.configservereureka;
+package com.prolik.java.spring.configservereurekakafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
-@EnableConfigServer
 @EnableDiscoveryClient
+@EnableConfigServer
 @SpringBootApplication
-public class ConfigServerEurekaApplication {
+public class ConfigServerEurekaKafkaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConfigServerEurekaApplication.class, args);
+		SpringApplication.run(ConfigServerEurekaKafkaApplication.class, args);
 	}
 }

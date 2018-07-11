@@ -1,4 +1,4 @@
-package com.example.spring.configservereureka;
+package com.prolik.java.spring.configservereurekarabbit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,9 +8,9 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableConfigServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class ConfigServerEurekaApplication {
+public class ConfigServerEurekaRabbitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConfigServerEurekaApplication.class, args);
+		SpringApplication.run(ConfigServerEurekaRabbitApplication.class, args);
 	}
 }
