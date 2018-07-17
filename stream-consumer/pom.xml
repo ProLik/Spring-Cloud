@@ -4,40 +4,54 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.prolik.java.spring</groupId>
-	<artifactId>spring-cloud-study</artifactId>
+	<artifactId>stream-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<name>spring-cloud-study</name>
+	<name>stream-consumer</name>
 	<description>Demo project for Spring Boot</description>
 
-	<modules>
-		<module>eureka-server</module>
-		<module>rabbitmq-hello</module>
-		<module>api-gateway</module>
-		<module>feign-consumer</module>
-		<module>hello-service</module>
-		<module>hello-service-api</module>
-		<module>hystrix</module>
-		<module>hystrix-dashboard</module>
-		<module>rabbitmq-hello</module>
-		<module>ribbon-consumer</module>
-		<module>turbine</module>
-		<module>turbine-amqp</module>
-		<module>config-server</module>
-		<module>config-client</module>
-		<module>config-client-eureka</module>
-		<module>config-server-eureka</module>
-		<module>config-client-eureka-rabbit</module>
-		<module>config-server-eureka-rabbit</module>
-		<module>config-client-eureka-kafka</module>
-		<module>config-server-eureka-kafka</module>
-		<module>stream-hello</module>
-		<module>stream-producer</module>
-		<module>stream-consumer</module>
-		<module>trace-1</module>
-		<module>trace-2</module>
-	</modules>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.7.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+		</dependency>
+
+		<!--<dependency>-->
+		<!--<groupId>org.springframework.cloud</groupId>-->
+		<!--<artifactId>spring-cloud-stream-binder-kafka</artifactId>-->
+		<!--</dependency>-->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-rxjava</artifactId>
+			<version>1.0.2.RELEASE</version>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>
